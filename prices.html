@@ -44,6 +44,17 @@
     #rec706492311908 .t431__table th {
       border: 1px solid #d9d9d9;
     }
+
+    #rec706492311908 .t431__table input::-webkit-outer-spin-button,
+    #rec706492311908 .t431__table input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    #rec706492311908 .t431__table input[type="number"] {
+      -moz-appearance: textfield;
+    }
   </style>
 
   <script>
@@ -52,6 +63,8 @@
     // t431_init(706492311908);
     // });
     // });
+
+    const results = {};
 
     const SIZES = {
       MODEL_WIDTH: "20%",
@@ -266,7 +279,15 @@
       tbody.classList.add("t431__tbody");
 
       data.rows.forEach((currentRow) => {
+        const id = currentRow.model;
+        results[id] = {
+          prise: currentRow.prise,
+          size: 0,
+          amount: 0,
+        };
+
         const tr = document.createElement("tr");
+        tr.setAttribute("id", id);
 
         // Модель
         const tdModel = document.createElement("td");
@@ -287,14 +308,16 @@
         tdSize.classList.add("size");
         tdSize.classList.add("t431__td");
         tdSize.classList.add("t-text");
-        tdSize.innerHTML = currentRow.select ?? "Размер";
+        const select = createSizeSelect(currentRow);
+        tdSize.appendChild(select);
 
         // Количество
         const tdAmount = document.createElement("td");
         tdAmount.classList.add("amount");
         tdAmount.classList.add("t431__td");
         tdAmount.classList.add("t-text");
-        tdAmount.innerHTML = currentRow.amount ?? "Количество";
+        const amountInput = createAmountInput();
+        tdAmount.appendChild(amountInput);
 
         // Цена
         const tdPrise = document.createElement("td");
@@ -315,12 +338,24 @@
       return tbody;
     }
 
-    function createSelect(min, max) {
+    function createSizeSelect(row) {
       const select = document.createElement("select");
 
-      if (Number(min) < Number(max)) {
-        let step = min;
-        while (step < max) {
+      select.addEventListener("change", (event) => {
+        const value = event.target.value;
+        console.log("value: ", value);
+      });
+
+      if (Number(row.sizeMin) < Number(row.sizeMax)) {
+        const option = document.createElement("option");
+        option.setAttribute("selected", "true");
+        option.value = "";
+        option.text = "";
+        select.appendChild(option);
+
+        let step = row.sizeMin;
+
+        while (step <= row.sizeMax) {
           const option = document.createElement("option");
           option.value = String(step);
           option.text = step;
@@ -332,5 +367,13 @@
 
       return select;
     }
+
+    function createAmountInput() {
+      const input = document.createElement("input");
+      input.type = "number";
+      return input;
+    }
+
+    console.log("results: ", results);
   </script>
 </div>
