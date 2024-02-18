@@ -53,7 +53,7 @@
 
     /* Firefox */
     #rec706492311908 .t431__table input[type="number"] {
-      -moz-appearance: textfield;
+      appearance: textfield;
     }
   </style>
 
@@ -84,7 +84,7 @@
 
     const STEP = 0.5;
 
-    const table = [
+    const data = mapIds([
       {
         title: "Извещатели малой дальности",
         header: ["Модель", "Описание", "Размер", "Количество", "Цена"],
@@ -204,176 +204,233 @@
           },
         ],
       },
-    ];
+    ]);
+
+    function getDispatch(data) {
+      return ({id, ...payload}) => {
+        results[id] = {id, ...results[id], ...payload};
+        // console.log("results: ", results);
+        rerender(results);
+      };
+    }
+
+    const createTable = getCreateTable(data);
+    const dispatch = getDispatch(data);
 
     const container = document.querySelector("#rec706492311908 .t431");
     if (container) {
-      const tableElement = createTable();
+      const tableElement = createTable(data);
       container.prepend(tableElement);
     }
 
-    function createTable() {
-      const tableElement = document.createElement("table");
-      tableElement.classList.add("t431__table");
-      tableElement.setAttribute("width", "100%");
+    function getCreateTable(data) {
+      const createTitle = getCreateTitle(data);
+      const createHeader = getCreateHeader(data);
+      const createBody = getCreateBody(data);
 
-      table.forEach((row) => {
-        // Создание заголовка. Пример: "Извещатели малой дальности"
-        if (row.title) {
-          const thead = createTitle(row);
-          tableElement.appendChild(thead);
-        }
+      return () => {
+        const tableElement = document.createElement("table");
+        tableElement.classList.add("t431__table");
+        tableElement.setAttribute("width", "100%");
 
-        // Создание шапки таблицы. Пример: "Модель", "Описание", "Размер", "Количество", "Цена"
-        if (row.header && row.header.length) {
-          const thead = createHeader(row);
-          tableElement.appendChild(thead);
-        }
+        data.forEach((row) => {
+          // Создание заголовка. Пример: "Извещатели малой дальности"
+          if (row.title) {
+            const thead = createTitle(row);
+            tableElement.appendChild(thead);
+          }
 
-        // Создание строк таблицы
-        if (row.rows && row.rows.length) {
-          const tbody = createBody(row);
-          tableElement.appendChild(tbody);
-        }
-      });
+          // Создание шапки таблицы. Пример: "Модель", "Описание", "Размер", "Количество", "Цена"
+          if (row.header && row.header.length) {
+            const thead = createHeader(row);
+            tableElement.appendChild(thead);
+          }
 
-      return tableElement;
+          // Создание строк таблицы
+          if (row.rows && row.rows.length) {
+            const tbody = createBody(row);
+            tableElement.appendChild(tbody);
+          }
+        });
+
+        return tableElement;
+      };
     }
 
-    function createTitle(row) {
-      const thead = document.createElement("thead");
-      thead.classList.add("t431__thead");
-
-      const tr = document.createElement("tr");
-      const th = document.createElement("th");
-      th.setAttribute("colspan", "5");
-      th.classList.add("t431__th");
-      th.classList.add("t-title");
-      th.innerText = row.title;
-      tr.appendChild(th);
-      thead.appendChild(tr);
-
-      return thead;
-    }
-
-    function createHeader(row) {
-      const thead = document.createElement("thead");
-      thead.classList.add("t431__thead");
-
-      const tr = document.createElement("tr");
-      row.header.forEach((text, index) => {
-        const th = document.createElement("th");
-        th.setAttribute("width", SIZES[KEYS[index]]);
-        th.classList.add("t431__th");
-        th.classList.add("t-title");
-        th.innerText = text;
-        tr.appendChild(th);
-      });
-
-      thead.appendChild(tr);
-      return thead;
-    }
-
-    function createBody(data) {
-      const tbody = document.createElement("tbody");
-      tbody.classList.add("t431__tbody");
-
-      data.rows.forEach((currentRow) => {
-        const id = currentRow.model;
-        results[id] = {
-          prise: currentRow.prise,
-          size: 0,
-          amount: 0,
-        };
+    function getCreateTitle(data) {
+      return (row) => {
+        const thead = document.createElement("thead");
+        thead.classList.add("t431__thead");
 
         const tr = document.createElement("tr");
-        tr.setAttribute("id", id);
+        const th = document.createElement("th");
+        th.setAttribute("colspan", "5");
+        th.classList.add("t431__th");
+        th.classList.add("t-title");
+        th.innerText = row.title;
+        tr.appendChild(th);
+        thead.appendChild(tr);
 
-        // Модель
-        const tdModel = document.createElement("td");
-        tdModel.classList.add("model");
-        tdModel.classList.add("t431__td");
-        tdModel.classList.add("t-text");
-        tdModel.innerHTML = currentRow.model;
-
-        // Описание
-        const tdDescription = document.createElement("td");
-        tdDescription.classList.add("description");
-        tdDescription.classList.add("t431__td");
-        tdDescription.classList.add("t-text");
-        tdDescription.innerHTML = currentRow.description;
-
-        // Размер
-        const tdSize = document.createElement("td");
-        tdSize.classList.add("size");
-        tdSize.classList.add("t431__td");
-        tdSize.classList.add("t-text");
-        const select = createSizeSelect(currentRow);
-        tdSize.appendChild(select);
-
-        // Количество
-        const tdAmount = document.createElement("td");
-        tdAmount.classList.add("amount");
-        tdAmount.classList.add("t431__td");
-        tdAmount.classList.add("t-text");
-        const amountInput = createAmountInput();
-        tdAmount.appendChild(amountInput);
-
-        // Цена
-        const tdPrise = document.createElement("td");
-        tdPrise.classList.add("prise");
-        tdPrise.classList.add("t431__td");
-        tdPrise.classList.add("t-text");
-        tdPrise.innerHTML = currentRow.prise ?? "Цена";
-
-        tr.appendChild(tdModel);
-        tr.appendChild(tdDescription);
-        tr.appendChild(tdSize);
-        tr.appendChild(tdAmount);
-        tr.appendChild(tdPrise);
-
-        tbody.appendChild(tr);
-      });
-
-      return tbody;
+        return thead;
+      };
     }
 
-    function createSizeSelect(row) {
-      const select = document.createElement("select");
+    function getCreateHeader(data) {
+      return (row) => {
+        const thead = document.createElement("thead");
+        thead.classList.add("t431__thead");
 
-      select.addEventListener("change", (event) => {
-        const value = event.target.value;
-        console.log("value: ", value);
-      });
+        const tr = document.createElement("tr");
+        row.header.forEach((text, index) => {
+          const th = document.createElement("th");
+          th.setAttribute("width", SIZES[KEYS[index]]);
+          th.classList.add("t431__th");
+          th.classList.add("t-title");
+          th.innerText = text;
+          tr.appendChild(th);
+        });
 
-      if (Number(row.sizeMin) < Number(row.sizeMax)) {
-        const option = document.createElement("option");
-        option.setAttribute("selected", "true");
-        option.value = "";
-        option.text = "";
-        select.appendChild(option);
+        thead.appendChild(tr);
+        return thead;
+      };
+    }
 
-        let step = row.sizeMin;
+    function getCreateBody(data) {
+      const createSizeSelect = getCreateSizeSelect(data);
+      const createAmountInput = getCreateAmountInput(data);
 
-        while (step <= row.sizeMax) {
+      return (data) => {
+        const tbody = document.createElement("tbody");
+        tbody.classList.add("t431__tbody");
+
+        data.rows.forEach((currentRow) => {
+          dispatch({
+            id: currentRow.id,
+            prise: currentRow.prise,
+            size: 0,
+            amount: 0,
+          });
+
+          const tr = document.createElement("tr");
+          tr.setAttribute("id", currentRow.id);
+
+          // Модель
+          const tdModel = document.createElement("td");
+          tdModel.classList.add("model");
+          tdModel.classList.add("t431__td");
+          tdModel.classList.add("t-text");
+          tdModel.innerHTML = currentRow.model;
+
+          // Описание
+          const tdDescription = document.createElement("td");
+          tdDescription.classList.add("description");
+          tdDescription.classList.add("t431__td");
+          tdDescription.classList.add("t-text");
+          tdDescription.innerHTML = currentRow.description;
+
+          // Размер
+          const tdSize = document.createElement("td");
+          tdSize.classList.add("size");
+          tdSize.classList.add("t431__td");
+          tdSize.classList.add("t-text");
+          const select = createSizeSelect(currentRow);
+          tdSize.appendChild(select);
+
+          // Количество
+          const tdAmount = document.createElement("td");
+          tdAmount.classList.add("amount");
+          tdAmount.classList.add("t431__td");
+          tdAmount.classList.add("t-text");
+          const amountInput = createAmountInput();
+          tdAmount.appendChild(amountInput);
+
+          // Цена
+          const tdPrise = document.createElement("td");
+          tdPrise.classList.add("prise");
+          tdPrise.classList.add("t431__td");
+          tdPrise.classList.add("t-text");
+          tdPrise.innerHTML = currentRow.prise ?? "Цена";
+
+          tr.appendChild(tdModel);
+          tr.appendChild(tdDescription);
+          tr.appendChild(tdSize);
+          tr.appendChild(tdAmount);
+          tr.appendChild(tdPrise);
+
+          tbody.appendChild(tr);
+        });
+
+        return tbody;
+      };
+    }
+
+    function getCreateSizeSelect(data) {
+      const dispatch = getDispatch(data);
+
+      return (row) => {
+        const select = document.createElement("select");
+        select.setAttribute("data-id", row.id);
+
+        select.addEventListener("change", (event) => {
+          const value = event.target.value;
+          const id = event.target.dataset.id;
+          console.log("value: ", value);
+          dispatch({id, size: Number(value)});
+        });
+
+        if (Number(row.sizeMin) < Number(row.sizeMax)) {
           const option = document.createElement("option");
-          option.value = String(step);
-          option.text = step;
+          option.setAttribute("selected", "true");
+          option.value = "";
+          option.text = "";
           select.appendChild(option);
 
-          step += STEP;
+          let step = row.sizeMin;
+
+          while (step <= row.sizeMax) {
+            const option = document.createElement("option");
+            option.value = String(step);
+            option.text = step;
+            select.appendChild(option);
+
+            step += STEP;
+          }
         }
-      }
 
-      return select;
+        return select;
+      };
     }
 
-    function createAmountInput() {
-      const input = document.createElement("input");
-      input.type = "number";
-      return input;
+    function getCreateAmountInput(data) {
+      return () => {
+        const input = document.createElement("input");
+        input.type = "number";
+        return input;
+      };
     }
 
-    console.log("results: ", results);
+    function rerender(results) {
+      const keys = Object.keys(results);
+      keys.forEach((key) => {
+        const {size, amount, prise} = results[key];
+        const total = (size ?? 0) * (amount ?? 0) * (prise ?? 0);
+        const priseEl = document.querySelector(`#${key} .prise`);
+        if (priseEl) {
+          priseEl.innerHTML = total;
+        }
+      });
+    }
+
+    function mapIds(table) {
+      return table.map((row) => ({
+        ...row,
+        rows: row.rows.map((currentRow) => ({
+          ...currentRow,
+          id: currentRow.model.replaceAll("/", "-").replaceAll(/\s+|\./g, ""),
+        })),
+      }));
+    }
+
+    // console.log("results: ", results);
   </script>
 </div>
