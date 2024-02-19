@@ -546,7 +546,7 @@
       return (row) => {
         const input = document.createElement("input");
         input.setAttribute("data-id", row.id);
-        addEventListener(input, "change", "amount");
+        addEventListener(input, "input", "amount");
         input.type = "number";
         input.min = 0;
         return input;
