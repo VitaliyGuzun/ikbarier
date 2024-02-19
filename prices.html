@@ -66,23 +66,32 @@
 
     const results = {};
 
+    const MODEL_KEY = "MODEL";
+    const DESCRIPTION_KEY = "DESCRIPTION";
+    const SIZE_KEY = "SIZE";
+    const AMOUNT_KEY = "AMOUNT";
+    const PRISE_KEY = "PRISE";
+
     const SIZES = {
-      MODEL_WIDTH: "20%",
-      DESCRIPTION_WIDTH: "30%",
-      SIZE_WIDTH: "15%",
-      AMOUNT_WIDTH: "15%",
-      PRISE_WIDTH: "20%",
+      [MODEL_KEY]: "20%",
+      [DESCRIPTION_KEY]: "30%",
+      [SIZE_KEY]: "15%",
+      [AMOUNT_KEY]: "15%",
+      [PRISE_KEY]: "20%",
     };
 
     const KEYS = {
-      0: "MODEL_WIDTH",
-      1: "DESCRIPTION_WIDTH",
-      2: "SIZE_WIDTH",
-      3: "AMOUNT_WIDTH",
-      4: "PRISE_WIDTH",
+      0: MODEL_KEY,
+      1: DESCRIPTION_KEY,
+      2: SIZE_KEY,
+      3: AMOUNT_KEY,
+      4: PRISE_KEY,
     };
 
     const STEP = 0.5;
+
+    const AMOUNT_TOTAL_ID = `${AMOUNT_KEY}-total`;
+    const PRISE_TOTAL_ID = `${PRISE_KEY}-total`;
 
     const data = mapIds([
       {
@@ -332,6 +341,7 @@
       const createTitle = getCreateTitle(data);
       const createHeader = getCreateHeader(data);
       const createBody = getCreateBody(data);
+      const createFooter = getCreateFooter(data);
 
       return () => {
         const tableElement = document.createElement("table");
@@ -357,6 +367,9 @@
             tableElement.appendChild(tbody);
           }
         });
+
+        const tfooter = createFooter();
+        tableElement.appendChild(tfooter);
 
         return tableElement;
       };
@@ -472,6 +485,27 @@
       };
     }
 
+    function getCreateFooter(data) {
+      return () => {
+        const tbody = document.createElement("tbody");
+        tbody.classList.add("t431__tbody");
+
+        const tr = document.createElement("tr");
+
+        data[0].header.forEach((_, index) => {
+          const td = document.createElement("td");
+          td.setAttribute("width", SIZES[KEYS[index]]);
+          td.classList.add("t431__td");
+          td.classList.add("t-text");
+          td.setAttribute("id", `${KEYS[index]}-total`);
+          tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+        return tbody;
+      };
+    }
+
     function getCreateSizeSelect(data) {
       return (row) => {
         if (row.prise === null || typeof row.prise === "number") {
@@ -521,12 +555,30 @@
 
     function rerender(results) {
       const keys = Object.keys(results);
+
+      let amountTotal = 0;
+      let priseTotal = 0;
+
+      // Обновление цен по строкам
       keys.forEach((key) => {
+        amountTotal += results[key].amount;
+        priseTotal += results[key].total;
+
         const priseEl = document.querySelector(`#${key} .prise`);
-        if (priseEl && results[key].total > 0) {
-          priseEl.innerHTML = results[key].total ?? "";
+        if (priseEl) {
+          priseEl.innerHTML = results[key].total > 0 ? results[key].total : "";
         }
       });
+
+      const amountTotalEl = document.getElementById(`${AMOUNT_KEY}-total`);
+      if (amountTotalEl) {
+        amountTotalEl.innerHTML = amountTotal > 0 ? amountTotal : "";
+      }
+
+      const priseTotalEl = document.getElementById(`${PRISE_KEY}-total`);
+      if (priseTotalEl) {
+        priseTotalEl.innerHTML = priseTotal > 0 ? priseTotal : "";
+      }
     }
 
     function mapIds(table) {
