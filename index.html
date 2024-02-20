@@ -72,13 +72,33 @@
     const AMOUNT_KEY = "AMOUNT";
     const PRISE_KEY = "PRISE";
 
-    const SIZES = {
-      [MODEL_KEY]: "20%",
-      [DESCRIPTION_KEY]: "30%",
-      [SIZE_KEY]: "15%",
-      [AMOUNT_KEY]: "15%",
-      [PRISE_KEY]: "20%",
-    };
+    const COLUMNS = [
+      {
+        key: MODEL_KEY,
+        name: "Модель",
+        size: "20%",
+      },
+      {
+        key: DESCRIPTION_KEY,
+        name: "Описание",
+        size: "30%",
+      },
+      {
+        key: SIZE_KEY,
+        name: "Размер",
+        size: "15%",
+      },
+      {
+        key: AMOUNT_KEY,
+        name: "Количество",
+        size: "15%",
+      },
+      {
+        key: PRISE_KEY,
+        name: "Цена",
+        size: "20%",
+      },
+    ];
 
     const KEYS = {
       0: MODEL_KEY,
@@ -96,13 +116,12 @@
     const data = mapIds([
       {
         title: "Извещатели малой дальности",
-        header: ["Модель", "Описание", "Размер", "Количество", "Цена"],
         rows: [
           {
-            model: "ДИА-2/16",
-            description:
+            [MODEL_KEY]: "ДИА-2/16",
+            [DESCRIPTION_KEY]:
               "Датчик для систем автоматики, безынерционный, дальность связи до 3 м, Дальность регулируемая. Высота датчика от 0,5м ло 3 м. Шаг 0.5м. Расстояние между лучами 16см. Корпус 30х40мм.",
-            prise: {
+            [PRISE_KEY]: {
               0.5: 18000,
               1: 34000,
               1.5: 50000,
@@ -112,10 +131,10 @@
             },
           },
           {
-            model: "ДИА-10/8",
-            description:
+            [MODEL_KEY]: "ДИА-10/8",
+            [DESCRIPTION_KEY]:
               "Датчик охранный, безынерционный, дальность связи до 10 м, Дальность регулируемая. Использование в закрытых помещениях. Без защиты от солнечных помех. Высота датчика от 0,5м ло 4 м. Шаг 0.5м. Расстояние между лучами 16см. Корпус 30х40мм.",
-            prise: {
+            [PRISE_KEY]: {
               0.5: 30000,
               1: 58000,
               1.5: 86000,
@@ -125,10 +144,10 @@
             },
           },
           {
-            model: "ДИА-10/16",
-            description:
+            [MODEL_KEY]: "ДИА-10/16",
+            [DESCRIPTION_KEY]:
               "Датчик охранный, безынерционный, дальность связи до 10 м, Дальность регулируемая. Использование в закрытых помещениях. Без защиты от солнечных помех. Высота датчика от 0,5м ло 6 м. Шаг 0.5м. Расстояние между лучами 16см. Корпус 30х40мм.",
-            prise: {
+            [PRISE_KEY]: {
               0.5: 28000,
               1: 52000,
               1.5: 76000,
@@ -138,10 +157,10 @@
             },
           },
           {
-            model: "ДИАС-10/16",
-            description:
+            [MODEL_KEY]: "ДИАС-10/16",
+            [DESCRIPTION_KEY]:
               "Датчик охранный, безынерционный, дальность связи до 10 м, Дальность регулируемая. Уличное исполнение. Температура от -30 до +55°С.100% защита от солнечных помех. Высота датчика от 0,5м ло 6 м. Шаг 0.5м. Расстояние между лучами 16см. Корпус 30х40мм.",
-            prise: {
+            [PRISE_KEY]: {
               0.5: 30000,
               1: 56000,
               1.5: 82000,
@@ -162,10 +181,10 @@
         title: "Извещатели средней дальности",
         rows: [
           {
-            model: "ДИА-60/16",
-            description:
+            [MODEL_KEY]: "ДИА-60/16",
+            [DESCRIPTION_KEY]:
               "Датчик охранный, безынерционный, дальность связи до 60 м, Дальность регулируемая. Использование в закрытых помещениях. Без защиты от солнечных помех. Высота датчика от 0,5м ло 6 м. Шаг 0.5м. Расстояние между лучами 16см. Корпус 60х40мм.",
-            prise: {
+            [PRISE_KEY]: {
               0.5: 30000,
               1: 56000,
               1.5: 82000,
@@ -181,10 +200,10 @@
             },
           },
           {
-            model: "ДИАС-60/16",
-            description:
+            [MODEL_KEY]: "ДИАС-60/16",
+            [DESCRIPTION_KEY]:
               "Датчик охранный, безынерционный, дальность связи до 60 м, Дальность регулируемая. Уличное исполнение. Температура от -30 до +55°С.100% Защита от солнечных помех. Высота датчика от 0,5м ло 6 м. Шаг 0.5м. Расстояние между лучами 16см. Корпус 60х40мм.",
-            prise: {
+            [PRISE_KEY]: {
               0.5: 36000,
               1: 68000,
               1.5: 100000,
@@ -205,10 +224,10 @@
         title: "Извещатели большой дальности",
         rows: [
           {
-            model: "ДИАС-100/16",
-            description:
+            [MODEL_KEY]: "ДИАС-100/16",
+            [DESCRIPTION_KEY]:
               "Датчик охранный, безынерционный, дальность связи до 100 м, Дальность регулируемая. Использование в закрытых помещениях. Без защиты от солнечных помех. Высота датчика от 0,5м ло 6 м. Шаг 0.5м. Расстояние между лучами 16см. Корпус 60х40мм.",
-            prise: {
+            [PRISE_KEY]: {
               0.5: 42000,
               1: 78000,
               1.5: 114000,
@@ -224,10 +243,10 @@
             },
           },
           {
-            model: "ДИАС-150/16С",
-            description:
+            [MODEL_KEY]: "ДИАС-150/16С",
+            [DESCRIPTION_KEY]:
               "Датчик охранный, безынерционный, дальность связи до 150 м, Дальность регулируемая. Уличное исполнение. Температура от -30 до +55°С.100% Защита от солнечных помех. Высота датчика от 0,5м ло 6 м. Шаг 0.5м. Расстояние между лучами 16см. Корпус 60х40мм.",
-            prise: {
+            [PRISE_KEY]: {
               0.5: 50000,
               1: 86000,
               1.5: 122000,
@@ -248,49 +267,49 @@
         title: "Запасные части, ремкомплекты",
         rows: [
           {
-            model: "МП ДИА-2/16",
-            description: "Плата излучателей и приемников",
-            prise: null,
+            [MODEL_KEY]: "МП ДИА-2/16",
+            [DESCRIPTION_KEY]: "Плата излучателей и приемников",
+            [PRISE_KEY]: null,
           },
           {
-            model: "МП ДИА-2/16",
-            description: "Плата излучателей и приемников",
-            prise: null,
+            [MODEL_KEY]: "МП ДИА-2/16",
+            [DESCRIPTION_KEY]: "Плата излучателей и приемников",
+            [PRISE_KEY]: null,
           },
           {
-            model: "МП ДИА-10/8",
-            description: "Плата излучателей и приемников",
-            prise: null,
+            [MODEL_KEY]: "МП ДИА-10/8",
+            [DESCRIPTION_KEY]: "Плата излучателей и приемников",
+            [PRISE_KEY]: null,
           },
           {
-            model: "МП ДИА-10/16",
-            description: "Плата излучателей и приемников",
-            prise: null,
+            [MODEL_KEY]: "МП ДИА-10/16",
+            [DESCRIPTION_KEY]: "Плата излучателей и приемников",
+            [PRISE_KEY]: null,
           },
           {
-            model: "МП ДИАС-10/16",
-            description: "Плата излучателей и приемников",
-            prise: null,
+            [MODEL_KEY]: "МП ДИАС-10/16",
+            [DESCRIPTION_KEY]: "Плата излучателей и приемников",
+            [PRISE_KEY]: null,
           },
           {
-            model: "МП ДИА-60/16",
-            description: "Плата излучателей и приемников",
-            prise: null,
+            [MODEL_KEY]: "МП ДИА-60/16",
+            [DESCRIPTION_KEY]: "Плата излучателей и приемников",
+            [PRISE_KEY]: null,
           },
           {
-            model: "МП ДИАС-100/16",
-            description: "Плата излучателей и приемников",
-            prise: null,
+            [MODEL_KEY]: "МП ДИАС-100/16",
+            [DESCRIPTION_KEY]: "Плата излучателей и приемников",
+            [PRISE_KEY]: null,
           },
           {
-            model: "МП ДИАС-150/16С",
-            description: "Плата излучателей и приемников",
-            prise: null,
+            [MODEL_KEY]: "МП ДИАС-150/16С",
+            [DESCRIPTION_KEY]: "Плата излучателей и приемников",
+            [PRISE_KEY]: null,
           },
           {
-            model: "PINP 3.8",
-            description: "Плата управления",
-            prise: null,
+            [MODEL_KEY]: "PINP 3.8",
+            [DESCRIPTION_KEY]: "Плата управления",
+            [PRISE_KEY]: null,
           },
         ],
       },
@@ -298,14 +317,14 @@
         title: "Модули питания",
         rows: [
           {
-            model: "Преобразователь 24/12",
-            description: "― 24В(АС) на 12 В(DC) ― 3А",
-            prise: 1800,
+            [MODEL_KEY]: "Преобразователь 24/12",
+            [DESCRIPTION_KEY]: "― 24В(АС) на 12 В(DC) ― 3А",
+            [PRISE_KEY]: 1800,
           },
           {
-            model: "Преобразователь 48/12",
-            description: "― 48В(АС) на 12 В(DC) ― 3А",
-            prise: 1800,
+            [MODEL_KEY]: "Преобразователь 48/12",
+            [DESCRIPTION_KEY]: "― 48В(АС) на 12 В(DC) ― 3А",
+            [PRISE_KEY]: 1800,
           },
         ],
       },
@@ -315,13 +334,14 @@
       return ({id, ...payload}) => {
         results[id] = {id, ...results[id], ...payload};
 
-        if (results[id].prise === null) {
+        if (results[id][PRISE_KEY] === null) {
           results[id].total = 0;
-        } else if (typeof results[id].prise === "number") {
-          results[id].total = results[id].amount * results[id].prise;
+        } else if (typeof results[id][PRISE_KEY] === "number") {
+          results[id].total = results[id][AMOUNT_KEY] * results[id][PRISE_KEY];
         } else {
           results[id].total =
-            results[id].amount * (results[id].prise[results[id].size] ?? 0);
+            results[id][AMOUNT_KEY] *
+            (results[id][PRISE_KEY][results[id][SIZE_KEY]] ?? 0);
         }
 
         rerender(results);
@@ -342,6 +362,7 @@
       const createHeader = getCreateHeader(data);
       const createBody = getCreateBody(data);
       const createFooter = getCreateFooter(data);
+      let isHeaderCreated = false;
 
       return () => {
         const tableElement = document.createElement("table");
@@ -356,9 +377,10 @@
           }
 
           // Создание шапки таблицы. Пример: "Модель", "Описание", "Размер", "Количество", "Цена"
-          if (row.header && row.header.length) {
+          if (!isHeaderCreated) {
             const thead = createHeader(row);
             tableElement.appendChild(thead);
+            isHeaderCreated = true;
           }
 
           // Создание строк таблицы
@@ -399,12 +421,12 @@
         thead.classList.add("t431__thead");
 
         const tr = document.createElement("tr");
-        row.header.forEach((text, index) => {
+        COLUMNS.forEach(({key, size, name}, index) => {
           const th = document.createElement("th");
-          th.setAttribute("width", SIZES[KEYS[index]]);
+          th.setAttribute("width", size);
           th.classList.add("t431__th");
           th.classList.add("t-title");
-          th.innerText = text;
+          th.innerText = name;
           tr.appendChild(th);
         });
 
@@ -424,59 +446,37 @@
         data.rows.forEach((currentRow) => {
           dispatch({
             id: currentRow.id,
-            prise: currentRow.prise,
-            size: null,
-            amount: null,
+            [PRISE_KEY]: currentRow[PRISE_KEY],
+            [SIZE_KEY]: null,
+            [AMOUNT_KEY]: null,
           });
 
           const tr = document.createElement("tr");
           tr.setAttribute("id", currentRow.id);
 
-          // Модель
-          const tdModel = document.createElement("td");
-          tdModel.classList.add("model");
-          tdModel.classList.add("t431__td");
-          tdModel.classList.add("t-text");
-          tdModel.innerHTML = currentRow.model;
-
-          // Описание
-          const tdDescription = document.createElement("td");
-          tdDescription.classList.add("description");
-          tdDescription.classList.add("t431__td");
-          tdDescription.classList.add("t-text");
-          tdDescription.innerHTML = currentRow.description;
-
-          // Размер
-          const tdSize = document.createElement("td");
-          tdSize.classList.add("size");
-          tdSize.classList.add("t431__td");
-          tdSize.classList.add("t-text");
-          const select = createSizeSelect(currentRow);
-          tdSize.appendChild(select);
-
-          // Количество
-          const tdAmount = document.createElement("td");
-          tdAmount.classList.add("amount");
-          tdAmount.classList.add("t431__td");
-          tdAmount.classList.add("t-text");
-          const amountInput = createAmountInput(currentRow);
-          tdAmount.appendChild(amountInput);
-
-          // Цена
-          const tdPrise = document.createElement("td");
-          tdPrise.classList.add("prise");
-          tdPrise.classList.add("t431__td");
-          tdPrise.classList.add("t-text");
-          tdPrise.innerHTML =
-            results[currentRow.id].total > 0
-              ? results[currentRow.id].total
-              : "";
-
-          tr.appendChild(tdModel);
-          tr.appendChild(tdDescription);
-          tr.appendChild(tdSize);
-          tr.appendChild(tdAmount);
-          tr.appendChild(tdPrise);
+          COLUMNS.forEach(({key, size}) => {
+            const td = document.createElement("td");
+            td.classList.add(key);
+            td.classList.add("t431__td");
+            td.classList.add("t-text");
+            if (key === MODEL_KEY) {
+              td.innerHTML = currentRow[MODEL_KEY];
+            } else if (key === DESCRIPTION_KEY) {
+              td.innerHTML = currentRow[DESCRIPTION_KEY];
+            } else if (key === SIZE_KEY) {
+              const select = createSizeSelect(currentRow);
+              td.appendChild(select);
+            } else if (key === AMOUNT_KEY) {
+              const amountInput = createAmountInput(currentRow);
+              td.appendChild(amountInput);
+            } else if (key === PRISE_KEY) {
+              td.innerHTML =
+                results[currentRow.id].total > 0
+                  ? results[currentRow.id].total
+                  : "";
+            }
+            tr.appendChild(td);
+          });
 
           tbody.appendChild(tr);
         });
@@ -492,12 +492,12 @@
 
         const tr = document.createElement("tr");
 
-        data[0].header.forEach((_, index) => {
+        COLUMNS.forEach(({key, size}) => {
           const td = document.createElement("td");
-          td.setAttribute("width", SIZES[KEYS[index]]);
+          td.setAttribute("width", size);
           td.classList.add("t431__td");
           td.classList.add("t-text");
-          td.setAttribute("id", `${KEYS[index]}-total`);
+          td.setAttribute("id", `${key}-total`);
           tr.appendChild(td);
         });
 
@@ -508,15 +508,15 @@
 
     function getCreateSizeSelect(data) {
       return (row) => {
-        if (row.prise === null || typeof row.prise === "number") {
+        if (row[PRISE_KEY] === null || typeof row[PRISE_KEY] === "number") {
           return document.createElement("span");
         }
 
         const select = document.createElement("select");
         select.setAttribute("data-id", row.id);
-        addEventListener(select, "change", "size");
+        addEventListener(select, "change", SIZE_KEY);
 
-        const sizes = Object.keys(row.prise ?? {});
+        const sizes = Object.keys(row[PRISE_KEY] ?? {});
 
         if (!sizes.length) {
           return select;
@@ -546,7 +546,7 @@
       return (row) => {
         const input = document.createElement("input");
         input.setAttribute("data-id", row.id);
-        addEventListener(input, "input", "amount");
+        addEventListener(input, "input", AMOUNT_KEY);
         input.type = "number";
         input.min = 0;
         return input;
@@ -561,10 +561,11 @@
 
       // Обновление цен по строкам
       keys.forEach((key) => {
-        amountTotal += results[key].amount;
+        amountTotal += results[key][AMOUNT_KEY];
         priseTotal += results[key].total;
 
-        const priseEl = document.querySelector(`#${key} .prise`);
+        const selector = `#${key} .${PRISE_KEY}`;
+        const priseEl = document.querySelector(`#${key} .${PRISE_KEY}`);
         if (priseEl) {
           priseEl.innerHTML = results[key].total > 0 ? results[key].total : "";
         }
@@ -586,7 +587,10 @@
         ...row,
         rows: row.rows.map((currentRow) => ({
           ...currentRow,
-          id: currentRow.model.replaceAll("/", "-").replaceAll(/\s+|\./g, ""),
+          id: currentRow[MODEL_KEY].replaceAll("/", "-").replaceAll(
+            /\s+|\./g,
+            ""
+          ),
         })),
       }));
     }
